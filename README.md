@@ -27,3 +27,8 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Sources for smart contracts
+
+- https://github.com/adriamb/SolRsaVerify/
+- https://github.com/chrisdotn/jsmnSol

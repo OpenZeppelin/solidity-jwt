@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-    <Main />
+    <h1>Create a new identity with Google recovery</h1>
+    <GoogleLogin :on-login="handleLogin" />
   </div>
 </template>
 
 <script>
-import Main from './components/Main.vue'
-// import GoogleLogin from './components/GoogleLogin.vue'
+import GoogleLogin from './GoogleLogin.vue';
 
 export default {
-  name: 'app',
+  name: 'signup',
   components: {
-    Main
-    // Main,
-    // GoogleLogin
+    GoogleLogin
+  },
+  methods: {
+    handleLogin: function(token) {
+
+    }
   }
 }
 </script>
