@@ -11,7 +11,7 @@ contract.only("Identity", function([_, owner, device]) {
     const header = '{"alg":"RS256","typ":"JWT"}';
     const payload = '{"sub":"1234567890","name":"John Doe","iat":1516239022,"nonce":"xf30B2uPOlNXxeOVq5cLW1QJj+8","aud":"theaudience.zeppelin.solutions"}';
     
-    const signatureBase64 = 'AGX1xExOqoa5XveFwkBpp2HaBL49EspzVRwb-bCDT2TnbzuqnUTG2malYsSSjGOt7sBlwcnXh3drQd_X0Ij5bgTfTQ8sTBN9EEltxK5G1pPfxkpfzv1zOdASRIUIgkADztpgZXUuQ46_YO-h4POG-CwrLNh6ecdtZpOAFcIyQkb6ryQT9lQNCWe6EzPVgPoddi-DOtFuxkiuyJaGlVE2dfaFhpLnOl_2mk2oFRUGMfIx201vTwcCXsvHVp_rmdyCKG8NUsbUY-pPkwqEh7IistNwuKt3hk2LRnMgZYdwV_2oSLJF2nD7sSJiVFo0I4BgpxurPzWHGX_AOZlwB0VFHg';
+    const signatureBase64 = 'cdPjRPD3K0XaHsT-uzw5uctm-bA4WZUsLmSd9QgX36sek-VkfNIlD_W9lkm_c4zQqUQOM05QZORt7QOsJPVvp7OmZ4-nkRTquIdTt710cABhgCexvu2OCTBXQk7LmO9zJzF84v7nLCYwaHD4uhISb2gquTUaHjQuvp7YfgNDnqZXhwHfZSSuulknlQryKT8cBlqcPn0e0sX9fswYWrX-gdAuJJZZ4Bxug9TJu2Og8d6fnuHxi9ww5mAYdEyMgrOCGLdvi6fkjR5bZyQ6q415H9Tq1sRIStwqUihzof52yBCreFKpptezW59OIkkLX3jkpatoOKYZIzUtei_dUYprEQ';
     const signature = '0x' + Buffer.from(signatureBase64, 'base64').toString('hex');
     
     console.log(device)
