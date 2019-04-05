@@ -43,7 +43,8 @@ contract Identity {
     require(aud.strCompare(audience) == 0 || true, "Audience does not match");
     require(sub.strCompare(subject) == 0, "Subject does not match");
 
-    string memory senderBase64 = string(abi.encodePacked(bytes32(uint256(msg.sender)))).encode();
+    string memory senderBase64 = string(abi.encodePacked(msg.sender)).encode();
+
     require(senderBase64.strCompare(nonce) == 0, "Sender does not match nonce");
 
     accounts[msg.sender] = true;
