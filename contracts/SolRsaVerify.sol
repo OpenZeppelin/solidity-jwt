@@ -23,7 +23,6 @@ pragma solidity ^0.5.0;
  */
 
 library SolRsaVerify {
-
     function memcpy(uint _dest, uint _src, uint _len) pure internal {
         // Copy word-length chunks while possible
         for ( ;_len >= 32; _len -= 32) {
@@ -74,7 +73,7 @@ library SolRsaVerify {
         return input;
     }
     
-    /** @dev Verifies a PKCSv1.5 SHA256 signature
+    /** @dev Verifies a PKCSv1.5 SSolRsaVerifyHA256 signature
       * @param _sha256 is the sha256 of the data
       * @param _s is the signature
       * @param _e is the exponent
@@ -148,14 +147,14 @@ library SolRsaVerify {
     function pkcs1Sha256VerifyRaw(
         bytes memory _data, 
         bytes memory _s, bytes memory _e, bytes memory _m
-    ) public view returns (uint) {
+    ) internal view returns (uint) {
         return pkcs1Sha256Verify(sha256(_data),_s,_e,_m);
     }
 
     function pkcs1Sha256VerifyStr(
         string memory _data, 
         bytes memory _s, bytes memory _e, bytes memory _m
-    ) public view returns (uint) {
+    ) internal view returns (uint) {
         return pkcs1Sha256Verify(sha256(bytes(_data)),_s,_e,_m);
     }
 

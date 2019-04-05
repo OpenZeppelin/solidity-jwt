@@ -2,9 +2,6 @@ pragma solidity ^0.5.0;
 
 import "./JsmnSolLib.sol";
 
-// "{ \"sub\": \"1234567890\", \"name\": \"John Doe\", \"iat\": 1516239022 }"
-// "{ \"name\": \"John Doe\", \"iat\": 1516239022, \"sub\": \"john@example.com\" }"
-
 contract JWT {
     using JsmnSolLib for string;
     
