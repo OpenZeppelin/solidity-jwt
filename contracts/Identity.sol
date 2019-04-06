@@ -26,16 +26,13 @@ contract Identity {
     subject = sub;
   }
 
-  function recover(string memory headerJson, string memory payloadJson, bytes memory signature) public 
-  // view returns (string memory) 
-  {
+  function recover(string memory headerJson, string memory payloadJson, bytes memory signature) public {
     string memory headerBase64 = headerJson.encode();
     string memory payloadBase64 = payloadJson.encode();
     StringUtils.slice[] memory slices = new StringUtils.slice[](2);
     slices[0] = headerBase64.toSlice();
     slices[1] = payloadBase64.toSlice();
     string memory message = ".".toSlice().join(slices);
-    // return message;
     require(message.pkcs1Sha256VerifyStr(signature, rsaExponent, rsaModulus) == 0, "RSA signature check failed");
 
     (string memory aud, string memory nonce, string memory sub) = parseToken(payloadJson);

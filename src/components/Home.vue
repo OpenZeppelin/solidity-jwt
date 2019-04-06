@@ -16,13 +16,6 @@ export default {
     return {
       error: ""
     }
-  },
-  created: function() {
-    if (!window.ethereum) {
-      this.error = "Metamask is required to use this page"
-    } else {
-      window.ethereum.enable().catch(err => { this.error = err });
-    }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="google-signin"></div>
-    <button v-on:click="signOut">Sign out</button>
+    <button id="google-signout" v-on:click="signOut">Sign out</button>
   </div>
 </template>
 
@@ -24,14 +24,15 @@ export default {
   created () {
     gapi.load('auth2', () => {
       gapi.auth2.init({
-        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
         ux_mode: 'popup',
         nonce: this.nonce
       }).then(() => {
         gapi.signin2.render('google-signin', {
           onsuccess: this.handleLogin,
           onfailure: this.handleFailure,
-          longtitle: true
+          longtitle: true,
+          scope: 'email' // TODO: How to prevent google from returning all profile info?
         });
       });
     });
@@ -40,8 +41,8 @@ export default {
     signOut: function() {
       gapi.auth2.getAuthInstance().signOut().then(() => console.log("Signed out"));
     },
-    handleFailure: function() {
-      this.error = `Please log in with your ${this.domain} user`;
+    handleFailure: function(err) {
+      this.error = err;
     },
     handleLogin: function(googleUser) {
       const token = googleUser.getAuthResponse().id_token;
@@ -52,3 +53,17 @@ export default {
   }
 }
 </script>
+
+<style>
+#google-signin {
+  width: 180px;
+  margin: auto;
+}
+
+#google-signout {
+  width: 180px;
+  margin: auto;
+  margin-top: 20px;
+  height: 36px;
+}
+</style>
