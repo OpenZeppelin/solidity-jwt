@@ -1,7 +1,7 @@
 const RSAContract = artifacts.require("SolRsaVerify");
 require('chai').should();
 
-contract("RSA verify", function([_, owner]) {
+contract.skip("RSA verify", function([_, owner]) {
 
   before('deploy', async function () {
     this.instance = await RSAContract.new();
@@ -26,20 +26,5 @@ contract("RSA verify", function([_, owner]) {
     const result = await this.instance.pkcs1Sha256VerifyRaw(message, signature, exponent, modulus);
     result.toNumber().should.be.eq(0);
   });
-
-  it('verifies jwt signature with 2048 bytes key', async function () {
-    const message = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0';
-    
-    const signatureBase64 = 'POstGetfAytaZS82wHcjoTyoqhMyxXiWdR7Nn7A29DNSl0EiXLdwJ6xC6AfgZWF1bOsS_TuYI3OG85AmiExREkrS6tDfTQ2B3WXlrr-wp5AokiRbz3_oB4OxG-W9KcEEbDRcZc0nH3L7LzYptiy1PtAylQGxHTWZXtGz4ht0bAecBgmpdgXMguEIcoqPJ1n3pIWk_dUZegpqx0Lka21H6XxUTxiy8OcaarA8zdnPUnV6AmNP3ecFawIFYdvJB_cm-GvpCSbr8G8y_Mllj8f4x9nBH8pQux89_6gUY618iYv7tuPWBFfEbLxtF2pZS6YC1aSfLQxeNe8djT9YjpvRZA';
-    const signature = '0x' + Buffer.from(signatureBase64, 'base64').toString('hex');
-    const modulus = "0x9F3CA2B356637CD0746C180A14C4AFBE44EDC25BC1B1A26AED2E7003E933795395A555B091675585AE2CDFC5CCFE96BFCABE3B6AFEFECF75539AF0D1C801DC693F76C214441692EFF5C8F99537894A26F2AFF32B9BF62D8C26555A068E608870AD7C0A2EA3EBFF5D629D6B0091F232B6F1D64F165811C5CB8005C5B94B9A4B7B85F60122350C33193535BF416A92A4C1AF807C9D6DC708DE3B5D4BB4B7C6347BE95FE2CE0EC506B0583EFD27DFF9777472D2F6D5DC09B516D189889BCEC11B087D50A10E9612B537074C232AB6F59B57A2F5D415A4A73197496E07BF8DEA6BE19260E0F6414EBC31BE7DA12936381F81B4E2E92687E66C610682F9B0C8223D33";
-    const exponent= "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010001";
-
-    const result = await this.instance.pkcs1Sha256VerifyStr(message, signature, exponent, modulus);
-    result.toNumber().should.be.eq(0);
-    // const gas = await this.instance.contract.methods.pkcs1Sha256VerifyStr(message, signature, exponent, modulus).estimateGas();
-    // console.log(gas);
-  });
-
 });
 

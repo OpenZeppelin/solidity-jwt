@@ -1,8 +1,13 @@
 <template>
   <div id="app">
-    <Home v-if="home" />
-    <SignUp v-if="signup" />
-    <Recover v-if="recover" />
+    <div v-if="!this.web3">
+      <p>Loading...</p>
+    </div>
+    <div v-else>
+      <Home v-if="home" />
+      <SignUp v-if="signup" />
+      <Recover v-if="recover" />
+    </div>
   </div>
 </template>
 
@@ -25,7 +30,7 @@ export default {
       this.error = "Metamask is required to use this page"
     } else {
       window.ethereum.enable()
-        .then(() => { window.web3 = new Web3(Web3.givenProvider) })
+        .then(() => { window.web3 = this.web3 = new Web3(Web3.givenProvider) })
         .catch(err => { alert(err) });
     }
   },
@@ -33,7 +38,8 @@ export default {
     return {
       home: window.location.pathname === '/',
       signup: window.location.pathname === '/signup',
-      recover: window.location.pathname === '/recover'
+      recover: window.location.pathname === '/recover',
+      web3: null
     };
   }
 }
@@ -47,5 +53,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+button {
+  width: 180px;
+  margin: auto;
+  height: 36px;
 }
 </style>

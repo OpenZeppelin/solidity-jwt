@@ -1,20 +1,23 @@
 <template>
   <div id="app">
     <h1>Create a new identity with Google recovery</h1>
+    <YourAddress :address="address" />
     <GoogleLogin :on-login="handleLogin" />
-    <CreateIdentity :v-if="token" :token="token" />
+    <CreateIdentity v-if="this.address && this.token" :address="address" :token="token" />
   </div>
 </template>
 
 <script>
 import CreateIdentity from './CreateIdentity.vue';
 import GoogleLogin from './GoogleLogin.vue';
+import YourAddress from './YourAddress.vue';
 
 export default {
   name: 'signup',
   components: {
     GoogleLogin,
-    CreateIdentity
+    CreateIdentity,
+    YourAddress
   },
   methods: {
     handleLogin: function(token) {
@@ -24,9 +27,14 @@ export default {
       const { aud, sub } = payload;
     }
   },
+  async mounted () {
+    const [address] = await window.web3.eth.getAccounts();
+    this.address = address;
+  },
   data () {
     return {
-      token: null
+      token: null,
+      address: null
     }
   },
 }

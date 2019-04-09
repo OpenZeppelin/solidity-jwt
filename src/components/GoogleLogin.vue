@@ -58,12 +58,6 @@ export default {
 #google-signin {
   width: 180px;
   margin: auto;
-}
-
-#google-signout {
-  width: 180px;
-  margin: auto;
-  margin-top: 20px;
-  height: 36px;
+  margin-bottom: 20px;
 }
 </style>

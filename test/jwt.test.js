@@ -1,7 +1,7 @@
 const JWTContract = artifacts.require("JWT");
 require('chai').should();
 
-contract("JWT", function([_, owner]) {
+contract.skip("JWT", function([_, owner]) {
 
   before('deploy', async function () {
     this.instance = await JWTContract.new();

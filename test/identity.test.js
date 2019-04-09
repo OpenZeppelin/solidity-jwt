@@ -1,7 +1,7 @@
 const Identity = artifacts.require("Identity");
 require('chai').should();
 
-contract.only("Identity", function([_, owner, device]) {
+contract("Identity", function([_, owner, device]) {
 
   before('deploy', async function () {
     this.instance = await Identity.new("1234567890", "theaudience.zeppelin.solutions", { from: owner });
