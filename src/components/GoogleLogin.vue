@@ -6,12 +6,13 @@
 </template>
 
 <script>
-
+import { parseToken } from '../utils/jwt';
 export default {
   name: 'login',
   props: {
     onLogin: { type: Function, required: true },
-    nonce: { type: String }
+    nonce: { type: String },
+    forceSignin: { type: Boolean }
   },
   data () {
     return {
@@ -26,28 +27,30 @@ export default {
       gapi.auth2.init({
         client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
         ux_mode: 'popup',
-        nonce: this.nonce
-      }).then(() => {
+        nonce: this.nonce,
+        scope: 'openid email' // TODO: How to prevent google from returning all profile info?
+      }).then(() => (
+        this.forceSignin ? this.signOut() : Promise.resolve(true)
+      )).then(() => {
         gapi.signin2.render('google-signin', {
           onsuccess: this.handleLogin,
           onfailure: this.handleFailure,
           longtitle: true,
-          scope: 'email' // TODO: How to prevent google from returning all profile info?
+          scope: 'openid email' // TODO: How to prevent google from returning all profile info?
         });
       });
     });
   },
   methods: {
     signOut: function() {
-      gapi.auth2.getAuthInstance().signOut().then(() => console.log("Signed out"));
+      return gapi.auth2.getAuthInstance().signOut().then(() => console.log("Signed out"));
     },
     handleFailure: function(err) {
       this.error = err;
     },
     handleLogin: function(googleUser) {
       const token = googleUser.getAuthResponse().id_token;
-      console.log("Signed in")
-      console.log(token);
+      console.log("Signed in", token, parseToken(token))
       this.onLogin(token);
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div id="recover">
     <h1>Identity recovery via Google Sign-in</h1>
     <YourAddress :address="address" />
     <p>
@@ -7,32 +7,39 @@
       <br/>
       <input type="text" v-model="identityAddress" v-on:change="this.checkOwner" />
     </p>
-    <p v-if="validAddresses">
+    <div v-if="validAddresses">
       <p v-if="owned">
-        Your address currently controls the identity contract. Hooray!
+        Your address currently controls the identity contract. Try changing to a different metamask account and refresh the page, and then use google sign in to regain access.
       </p>
-      <p v-else-if="this.owned === false">
-        Your address does not control the identity contract.
-      </p>
-    </p>
+      <div v-else-if="this.owned === false">
+        <p>
+          Your address does not control the identity contract.
+        </p>
+        <GoogleLogin :nonce="this.identityAddress" :onLogin="this.recover" :forceSignin="true" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import YourAddress from './YourAddress.vue';
+import GoogleLogin from './GoogleLogin.vue';
 import { Identity } from '../utils/contracts.js';
+import { tokenForRecovery, parseToken } from '../utils/jwt.js';
 
 export default {
   name: 'recover',
   components: {
-    YourAddress
+    YourAddress,
+    GoogleLogin
   },
   data () {
     return {
       identityAddress: null,
       validAddresses: null,
       address: null,
-      owned: null
+      owned: null,
+      recovering: false
     }
   },
   async mounted () {
@@ -46,13 +53,24 @@ export default {
         console.log("Checking ownership of", this.identityAddress);
         this.owned = await Identity(this.identityAddress).methods.accounts(this.address).call()
           .catch(err => {
-            if (err =~ /Returned values aren't valid/) {
+            if (err.match(/Returned values aren't valid/)) {
               return false;
             } else {
               Promise.reject(err);
             }
           });
       }
+    },
+    recover: async function (token) {
+      this.recovering = true;
+      const { header, payload, signature } = tokenForRecovery(token);
+      console.log('Token:', parseToken(token));
+      console.log('Recovering identity:', header, payload, signature);
+      await Identity(this.identityAddress).methods
+        .recover(header.toString(), payload.toString(), signature)
+        .send({ from: this.address, gas: 40000000 });
+      this.checkOwner();
+      this.recovering = false;
     }
   }
 }
@@ -74,6 +92,11 @@ a {
   color: #42b983;
 }
 input {
-  width: 300px;
+  width: 340px;
+  text-align: center;
+}
+#recover {
+  max-width: 600px;
+  margin: auto;
 }
 </style>

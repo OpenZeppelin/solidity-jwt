@@ -10,3 +10,12 @@ export function parseToken(token) {
     signature: '0x' + Buffer.from(signature, 'base64').toString('hex')
   }
 }
+
+export function tokenForRecovery(token) {
+  const [header, payload, signature] = splitToken(token);
+  return {
+    header: atob(header),
+    payload: atob(payload),
+    signature: '0x' + Buffer.from(signature, 'base64').toString('hex')
+  }
+}
