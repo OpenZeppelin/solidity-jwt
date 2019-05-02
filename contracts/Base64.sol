@@ -2,7 +2,8 @@ pragma solidity ^0.5.0;
 
 library Base64 {
 
-    bytes constant private base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    bytes constant private base64stdchars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    bytes constant private base64urlchars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
     function encode(string memory _str) internal pure returns (string memory) {
 
@@ -57,10 +58,10 @@ library Base64 {
         uint256 c2 = (n >>  6) & 63;
         uint256 c3 = (n      ) & 63;
 
-        b0 = base64chars[c0];
-        b1 = base64chars[c1];
-        b2 = base64chars[c2];
-        b3 = base64chars[c3];
+        b0 = base64urlchars[c0];
+        b1 = base64urlchars[c1];
+        b2 = base64urlchars[c2];
+        b3 = base64urlchars[c3];
     }
 
 }

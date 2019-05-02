@@ -27,8 +27,8 @@ export default {
       gapi.auth2.init({
         client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
         ux_mode: 'popup',
-        nonce: this.nonce,
-        scope: 'openid email' // TODO: How to prevent google from returning all profile info?
+        nonce: this.nonce ? Buffer.from(this.nonce.slice(2), 'hex').toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '') : null,
+        scope: 'openid email'
       }).then(() => (
         this.forceSignin ? this.signOut() : Promise.resolve(true)
       )).then(() => {

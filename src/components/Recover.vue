@@ -15,7 +15,7 @@
         <p>
           Your address does not control the identity contract.
         </p>
-        <GoogleLogin :nonce="this.identityAddress" :onLogin="this.recover" :forceSignin="true" />
+        <GoogleLogin :nonce="this.address" :onLogin="this.recover" :forceSignin="true" />
       </div>
     </div>
   </div>
@@ -68,7 +68,7 @@ export default {
       console.log('Recovering identity:', header, payload, signature);
       await Identity(this.identityAddress).methods
         .recover(header.toString(), payload.toString(), signature)
-        .send({ from: this.address, gas: 40000000 });
+        .send({ from: this.address, gas: 6e6 });
       this.checkOwner();
       this.recovering = false;
     }
