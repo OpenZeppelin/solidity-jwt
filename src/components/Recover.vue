@@ -75,7 +75,7 @@ export default {
     checkOwner: async function (identity) {
       this.owned = await identity.methods.accounts(this.address).call()
         .catch(err => {
-          if (err.match(/Returned values aren't valid/)) {
+          if (err.message && err.message.match(/Returned values aren't valid/)) {
             return false;
           } else {
             Promise.reject(err);
