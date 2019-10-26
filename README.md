@@ -1,6 +1,6 @@
 # Solidity JWT validator
 
-This project includes a set of contracts and a Vue-based demo that allow you to **deploy an identity contract** and then **recover it using Google Sign-In**. This is a proof-of-concept and is definitely not ready for production :warning:.
+This project includes a set of contracts and a Vue-based demo that allow you to **deploy an identity contract** and then **recover it using Google Sign-In**. This is a proof-of-concept and is definitely not ready for production :warning:
 
 ## Project setup
 
