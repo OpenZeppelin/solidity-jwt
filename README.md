@@ -5,8 +5,9 @@ This project includes a set of contracts and a Vue-based demo that allow you to 
 ## Project setup
 
 - Install dependencies via `npm install`
-- Create a project in the [Google Developers console](https://console.developers.google.com/) and set up OAuth
-- Copy the project it to your `.env` local file
+- Create a project in the [Google Developers console](https://console.developers.google.com/)
+- In the Credentials section of your project, create an OAuth 2.0 for a Web Application
+- Copy the client ID to your `.env` local file
 - Start a local ganache instance and copy the network ID to your local `.env` file
 - Update the keys in `scripts/deployKeys.js` using the [latest JWKS shared by Google](https://accounts.google.com/.well-known/openid-configuration)
 - Deploy the JWKS contract running `npx truffle exec scripts/deployKeys.js --network local` and copy the deployment address to your local `.env` file
