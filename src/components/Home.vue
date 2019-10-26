@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1>Google recovery for identity contracts</h1>
     <h2>
       <a href="/signup">Create a new identity</a>
       |
