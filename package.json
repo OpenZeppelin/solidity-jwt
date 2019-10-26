@@ -23,6 +23,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "ganache-cli": "^6.4.3",
     "truffle": "^5.0.11",
+    "truffle-hdwallet-provider": "^1.0.17",
     "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {
