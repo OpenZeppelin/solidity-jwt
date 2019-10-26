@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <div v-if="!this.web3">
+    <div v-if="!this.web3 || !this.network">
       <p>Loading...</p>
+    </div>
+    <div v-else-if="this.network != this.targetNetwork">
+      <p>Please switch Metamask to network ID {{this.targetNetwork}} (current network is {{this.network}})</p>
     </div>
     <div v-else>
       <Home v-if="home" />
@@ -27,10 +30,14 @@ export default {
   mounted () {
     // Enable metamask
     if (!window.ethereum) {
-      this.error = "Metamask is required to use this page"
+      alert("Metamask is required to use this page");
     } else {
       window.ethereum.enable()
-        .then(() => { window.web3 = this.web3 = new Web3(Web3.givenProvider) })
+        .then(() => { 
+          window.web3 = this.web3 = new Web3(Web3.givenProvider);
+          return this.web3.eth.net.getId();
+        })
+        .then(id => this.network = id)
         .catch(err => { alert(err) });
     }
   },
@@ -39,7 +46,9 @@ export default {
       home: window.location.pathname === '/',
       signup: window.location.pathname === '/signup',
       recover: window.location.pathname === '/recover',
-      web3: null
+      web3: null,
+      network: null,
+      targetNetwork: process.env.VUE_APP_NETWORK
     };
   }
 }

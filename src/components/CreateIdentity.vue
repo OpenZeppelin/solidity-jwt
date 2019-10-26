@@ -13,6 +13,9 @@
     <p v-if="this.identity">
       <b>Save this address!</b>
     </p>
+    <p v-if="this.identity">
+      Now try switching to a different address in Metamask, and heading over to the <a href="/recover">recovery</a> page, to see if you can regain access to your identity contract...
+    </p>
   </div>
 </template>
 
@@ -40,9 +43,10 @@ export default {
       this.identity = null;
       const { payload } = parseToken(this.token);
       const identity = await Identity()
-        .deploy({ arguments: [payload.sub, payload.aud] })
+        .deploy({ arguments: [payload.sub, payload.aud, process.env.VUE_APP_JWKS_ADDRESS] })
         .send({ from: this.address, gasPrice: 10e9 });
       this.identity = identity;
+      localStorage.identityAddress = identity.options.address;
       this.creating = false;
     }
   }
@@ -50,5 +54,10 @@ export default {
 </script>
 
 <style>
-
+div > p {
+  max-width: 600px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

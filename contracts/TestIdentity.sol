@@ -7,14 +7,14 @@ contract TestIdentity is Identity {
   bytes private constant rsaModulus = hex"B0CA0A0EEBA26CDA6C0FA56527056D49C91045CFD6598A050F7CA831173416426F3630264221C94B8189F19CBFA2073682CE16A459C5E59978320FFC9AF811A8E9B1264C4DD3B32339791458EFD65776229FF82CE26389BACFB606FDFD05AD0253045931B7BFD1383CA5D2E5F49796C828A59321F1632CED38FE66FD668D9C2851F47E50CF337A1FE37C189DA93E2CFC5CFCB833C06F749FF405E33C94AEA36D120B622E9C61BEADDF677458EEA985C6567C7A54B3F6D079FBFB6C563548C0349E5D08972D9E6BE932E69001AB0390363A342A9A874C70B231EB0B0CD90D4599D914C7ADF755EE5E5012099AA1DC5A7152B598B8F90C2B16842A26F650FE5E6F";
 
   constructor(string memory sub, string memory aud)
-    Identity(sub, aud)
+    Identity(sub, aud, JWKS(0))
     public payable { }
 
-  function getRsaExponent(string memory _kid) internal pure returns (bytes memory) {
+  function getRsaExponent(string memory) internal pure returns (bytes memory) {
     return rsaExponent;
   }
 
-  function getRsaModulus(string memory _kid) internal pure returns (bytes memory) {
+  function getRsaModulus(string memory) internal view returns (bytes memory) {
     return rsaModulus;
   }
 }
