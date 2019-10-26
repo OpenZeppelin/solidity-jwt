@@ -1,6 +1,6 @@
 <template>
   <p v-if="this.address">
-    <span>Your Ehereum adress is</span>
+    <span>Your Ethereum adress is</span>
     <br/>
     <span>{{ this.address }}</span>
   </p>
