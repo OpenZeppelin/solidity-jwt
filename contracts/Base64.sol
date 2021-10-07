@@ -34,7 +34,7 @@ library Base64 {
                 la1 = uint8(_bs[_bs.length - 1]);
             }
 
-            (byte b0, byte b1, byte b2, byte b3) = encode3(la0, la1, 0);
+            (bytes1 b0, bytes1 b1, bytes1 b2, bytes1 b3) = encode3(la0, la1, 0);
             res[j] = b0;
             res[j+1] = b1;
             if (rem == 2) {
@@ -48,7 +48,7 @@ library Base64 {
     function encode3(uint256 a0, uint256 a1, uint256 a2)
         private
         pure
-        returns (byte b0, byte b1, byte b2, byte b3)
+        returns (bytes1 b0, bytes1 b1, bytes1 b2, bytes1 b3)
     {
 
         uint256 n = (a0 << 16) | (a1 << 8) | a2;
